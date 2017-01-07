@@ -270,6 +270,14 @@ copy /Y c:\gettext%BIT%\libintl-8.dll    ..\runtime\
 if exist c:\gettext%BIT%\libgcc_s_sjlj-1.dll copy /Y c:\gettext%BIT%\libgcc_s_sjlj-1.dll ..\runtime\
 copy /Y winpty* ..\runtime\
 copy /Y winpty* ..\..\
+
+:: Copy dlls to runtime dir 
+copy /Y %RUBY_DIR%\bin\*-msvcrt-ruby*.dll ..\runtime\
+mkdir ..\runtime\ruby_builtin_dlls
+For %%F In ("%RUBY_DIR%\bin\ruby_builtin_dlls\*.dll") Do If Not Exist "..\runtime\%%~nxF" Copy "%%F" "..\runtime\ruby_builtin_dlls\%%~nxF"
+copy /Y %LUA_DIR%\*.dll ..\runtime\
+::
+
 set dir=vim%APPVEYOR_REPO_TAG_NAME:~1,1%%APPVEYOR_REPO_TAG_NAME:~3,1%
 mkdir ..\vim\%dir%
 xcopy ..\runtime ..\vim\%dir% /Y /E /V /I /H /R /Q

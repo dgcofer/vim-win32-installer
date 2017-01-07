@@ -8,7 +8,7 @@ skip_non_tags: true
 environment:
   matrix:
     - ARCH: x64
-    - ARCH: x86
+#    - ARCH: x86
 
 matrix:
   fast_finish: true
@@ -33,16 +33,17 @@ test_script:
   - '"%APPVEYOR_BUILD_FOLDER%\appveyor.bat" test'
 
 artifacts:
-  - path: gvim_*_x86.zip
-    name: gVim_x86
-  - path: gvim_*_x86_pdb.zip
-    name: gVim_x86_pdb
+#  - path: gvim_*_x86.zip
+#    name: gVim_x86
+#  - path: gvim_*_x86_pdb.zip
+#    name: gVim_x86_pdb
+#  - path: gvim_*_x86.exe
+#    name: gVim_x86_installer
+#64bit
   - path: gvim_*_x64.zip
     name: gVim_x64
   - path: gvim_*_x64_pdb.zip
     name: gVim_x64_pdb
-  - path: gvim_*_x86.exe
-    name: gVim_x86_installer
   - path: gvim_*_x64.exe
     name: gVim_x64_installer
 
@@ -83,7 +84,7 @@ deploy:
       Make sure that you install the same architecture (32bit/64bit) that matches your Vim installation.
     auth_token:
       # Update the following key, once this is merged to Vim main repository:
-      secure: kH0D/3t+1Mc8OChKhe+voKlMO0aMwnlUr64QoZOJC6BaVwy+Us3ZHq9Oo+aBzjYc
+      secure: FDsdMSiivkIefnn/6n3aRiTgMgcrJkiCVQfIT7JkUV06rQKVCtI4IyNpx6sI4U3R
     artifact: /gVim/
     draft: false
     prerelease: false
