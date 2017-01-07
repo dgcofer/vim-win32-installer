@@ -217,6 +217,10 @@ copy /Y GvimExt\*.reg        ..\runtime\GvimExt\
 copy /Y ..\..\diff.exe ..\runtime\
 copy /Y c:\gettext\libiconv*.dll ..\runtime\
 copy /Y c:\gettext\libintl-8.dll ..\runtime\
+copy /Y C:\Windows\System32\python%PYTHON_VER%.dll ..\runtime\
+copy /Y %PYTHON3_DIR%\python%PYTHON3_VER%.dll ..\runtime\
+copy /Y %RUBY_DIR%\bin\*-msvcrt-ruby*.dll ..\runtime\
+copy /Y %LUA_DIR%\*.dll ..\runtime\
 :: libwinpthread is needed on Win64 for localizing messages
 if exist c:\gettext\libwinpthread-1.dll copy /Y c:\gettext\libwinpthread-1.dll ..\runtime\
 set dir=vim%APPVEYOR_REPO_TAG_NAME:~1,1%%APPVEYOR_REPO_TAG_NAME:~3,1%
