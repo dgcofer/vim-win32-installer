@@ -4,6 +4,8 @@
 setlocal ENABLEDELAYEDEXPANSION
 cd %APPVEYOR_BUILD_FOLDER%
 
+set
+
 if /I "%ARCH%"=="x64" (
   set BIT=64
 ) else (
@@ -151,10 +153,10 @@ sed -e "s/\$(LINKARGS2)/\$(LINKARGS2) | sed -e 's#.*\\\\r.*##'/" Make_mvc.mak > 
 :: Build GUI version
 nmake -f Make_mvc2.mak ^
 	GUI=yes OLE=yes DIRECTX=yes ^
+	CPU=AMD64 ^
 	FEATURES=HUGE IME=yes MBYTE=yes ICONV=yes DEBUG=no ^
 	DYNAMIC_PERL=yes PERL=%PERL_DIR% ^
-	DYNAMIC_PYTHON=yes PYTHON=%PYTHON_DIR% ^
-	DYNAMIC_PYTHON3=yes PYTHON3=%PYTHON3_DIR% ^
+	DYNAMIC_PYTHON=no PYTHON=%PYTHON_DIR% ^
 	DYNAMIC_LUA=yes LUA=%LUA_DIR% ^
 	DYNAMIC_TCL=yes TCL=%TCL_DIR% ^
 	DYNAMIC_RUBY=yes RUBY=%RUBY_DIR% RUBY_MSVCRT_NAME=msvcrt ^
@@ -164,10 +166,10 @@ nmake -f Make_mvc2.mak ^
 :: Build CUI version
 nmake -f Make_mvc2.mak ^
 	GUI=no OLE=no DIRECTX=no ^
+	CPU=AMD64 ^
 	FEATURES=HUGE IME=yes MBYTE=yes ICONV=yes DEBUG=no ^
 	DYNAMIC_PERL=yes PERL=%PERL_DIR% ^
-	DYNAMIC_PYTHON=yes PYTHON=%PYTHON_DIR% ^
-	DYNAMIC_PYTHON3=yes PYTHON3=%PYTHON3_DIR% ^
+	DYNAMIC_PYTHON=no PYTHON=%PYTHON_DIR% ^
 	DYNAMIC_LUA=yes LUA=%LUA_DIR% ^
 	DYNAMIC_TCL=yes TCL=%TCL_DIR% ^
 	DYNAMIC_RUBY=yes RUBY=%RUBY_DIR% RUBY_MSVCRT_NAME=msvcrt ^
@@ -217,8 +219,8 @@ copy /Y GvimExt\*.reg        ..\runtime\GvimExt\
 copy /Y ..\..\diff.exe ..\runtime\
 copy /Y c:\gettext\libiconv*.dll ..\runtime\
 copy /Y c:\gettext\libintl-8.dll ..\runtime\
-copy /Y C:\Windows\System32\python%PYTHON_VER%.dll ..\runtime\
-copy /Y %PYTHON3_DIR%\python%PYTHON3_VER%.dll ..\runtime\
+::copy /Y C:\Windows\System32\python%PYTHON_VER%.dll ..\runtime\
+::copy /Y %PYTHON3_DIR%\python%PYTHON3_VER%.dll ..\runtime\
 copy /Y %RUBY_DIR%\bin\*-msvcrt-ruby*.dll ..\runtime\
 copy /Y %LUA_DIR%\*.dll ..\runtime\
 :: libwinpthread is needed on Win64 for localizing messages
