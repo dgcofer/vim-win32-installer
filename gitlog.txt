@@ -1,1 +1,1 @@
-* 8.0.0150: completion for :filter does not skip the pattern\n* 8.0.0149: :earlier does not work after reading the undo file\n* 8.0.0148: wrong indent in C preprocessor with line continuation
+
