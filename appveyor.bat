@@ -34,6 +34,7 @@ set PYTHON3_VER=36
 set PYTHON3_32_DIR=C:\python%PYTHON3_VER%
 set PYTHON3_64_DIR=C:\python%PYTHON3_VER%-x64
 set PYTHON3_DIR=!PYTHON3_%BIT%_DIR!
+set PYTHON3_EMBED_ZIP_URL=https://www.python.org/ftp/python/3.6.3/python-3.6.3-embed-amd64.zip
 :: Racket
 set RACKET_VER=3m_a36fs8
 set RACKET32_URL=https://mirror.racket-lang.org/releases/6.10.1/installers/racket-minimal-6.10.1-i386-win32.exe
@@ -155,6 +156,11 @@ if /i "%ARCH%"=="x64" (
 call :downloadfile %UPX_URL% downloads\upx.zip
 7z e downloads\upx.zip *\upx.exe -ovim\nsis > nul || exit 1
 
+::Download Python3 embed-amd64
+call :downloadfile %PYTHON3_EMBED_ZIP_URL% downloads\python3-embed.zip
+mkdir vim\runtime\python3
+7z e downloads\python3-embed.zip -ovim\runtime\python3 > nul || exit 1
+
 :: Show PATH for debugging
 path
 
@@ -186,6 +192,7 @@ sed -e "s/\$(LINKARGS2)/\$(LINKARGS2) | sed -e 's#.*\\\\r.*##'/" Make_mvc.mak > 
 :: Build GUI version
 nmake -f Make_mvc2.mak ^
 	GUI=yes OLE=yes DIRECTX=yes ^
+	CPU=AMD64 ^
 	FEATURES=HUGE IME=yes MBYTE=yes ICONV=yes DEBUG=no ^
 	DYNAMIC_PERL=yes PERL=%PERL_DIR% ^
 	DYNAMIC_PYTHON=yes PYTHON=%PYTHON_DIR% ^
@@ -199,6 +206,7 @@ nmake -f Make_mvc2.mak ^
 :: Build CUI version
 nmake -f Make_mvc2.mak ^
 	GUI=no OLE=no DIRECTX=no ^
+	CPU=AMD64 ^
 	FEATURES=HUGE IME=yes MBYTE=yes ICONV=yes DEBUG=no ^
 	DYNAMIC_PERL=yes PERL=%PERL_DIR% ^
 	DYNAMIC_PYTHON=yes PYTHON=%PYTHON_DIR% ^
@@ -280,6 +288,8 @@ copy /Y %LUA_DIR%\*.dll ..\runtime\
 
 set dir=vim%APPVEYOR_REPO_TAG_NAME:~1,1%%APPVEYOR_REPO_TAG_NAME:~3,1%
 mkdir ..\vim\%dir%
+::Copy system vimrc from patch
+if exist vimrc copy /Y vimrc ..\vim\
 xcopy ..\runtime ..\vim\%dir% /Y /E /V /I /H /R /Q
 7z a ..\..\gvim_%APPVEYOR_REPO_TAG_NAME:~1%_%ARCH%.zip ..\vim
 

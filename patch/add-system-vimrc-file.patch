@@ -1,0 +1,21 @@
+From 484639fcec6a489f2cdf28da0c016d715acda676 Mon Sep 17 00:00:00 2001
+From: dcofer44 <dcofer@ggc.edu>
+Date: Sat, 21 Jan 2017 00:18:35 -0500
+Subject: [PATCH] Add system vimrc file
+
+---
+ src/vimrc | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 src/vimrc
+
+diff --git a/src/vimrc b/src/vimrc
+new file mode 100644
+index 000000000..6f0cf9822
+--- /dev/null
++++ b/src/vimrc
+@@ -0,0 +1 @@
++let $PATH.=';' . $VIMRUNTIME . '\python3'
++let $PATH.=';' . $VIMRUNTIME . 'ruby_builtin_dlls'
+-- 
+2.11.0.windows.1
+
