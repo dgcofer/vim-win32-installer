@@ -91,5 +91,7 @@ deploy:
 
 cache:
   - downloads -> appveyor.bat
+install:
+  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
 
 # vim: ts=2 sw=2 et
